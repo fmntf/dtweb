@@ -27,9 +27,12 @@ class Controller_Save extends Controller
 	{
 		$conf = json_decode($_POST['conf'], true);
         $kernelDir = realpath(__DIR__ . '/../../dtbkernel');
+        $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
+        $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
+        $target = "imx6q-udoo.dtb";
         
         $dtreader = new Service_DeviceTreeReader();
-        $dt = $dtreader->parse("$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi");
+        $dt = $dtreader->parse($dist);
 
         $config = new Model_Configuration();
         foreach ($conf as $name => $pins) {
@@ -39,7 +42,17 @@ class Controller_Save extends Controller
         $dteditor = new Service_DeviceTreeEditor($dt);
         $dteditor->applyConfiguration($config);
 
-        file_put_contents("$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi", $dteditor->generate());
+        file_put_contents($dtsi, $dteditor->generate());
+        unlink("$kernelDir/arch/arm/boot/dts/$target");
+        if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
+            $this->json(array('success' => false, 'message' => 'Cannot delete DTB.'));
+        }
         
+        exec("make $target");
+        if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
+            $this->json(array('success' => true));
+        } else {
+            $this->json(array('success' => false, 'message' => 'DTB not built!'));
+        }
 	}
 }

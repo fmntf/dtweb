@@ -38,4 +38,10 @@ class Controller
 		include __DIR__ . "/View/$script.phtml";
 		include __DIR__ . "/View/_footer.phtml";
 	}
+	
+	protected function json(array $response)
+	{
+		header('Content-type: application/json');
+		echo json_encode($response);
+	}
 }

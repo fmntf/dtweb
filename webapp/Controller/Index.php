@@ -26,7 +26,7 @@ class Controller_Index extends Controller
     public function run()
 	{
 		$this->viewVars = array(
-			'x' => 0
+			'board' => 'qdl'
 		);
 		$this->render('index');
 	}
