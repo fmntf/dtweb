@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Device Tree editor</title>
+
+		<link rel="stylesheet" href="/jquery-ui/jquery-ui.css">
+		<link href="/fonts/ArchivoNarrow.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
+		<script src="/jquery-1.11.3.min.js"></script>
+		<script src="/jquery-ui/jquery-ui.min.js"></script>
+		<script src="/jquery.ui-contextmenu.js"></script>
+		<script src="/boardmanager.js"></script>
+		
+		<script src="/boards/qdl/board.js"></script>
+		<link rel="stylesheet" href="/boards/qdl/board.css">
+	</head>
+	<body>
+		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+
+					<ul class="nav nav-tabs" style="margin-top: 10px;">
+						<li style="font-size: 18px; line-height: 40px; margin-right: 15px;">Device Tree editor</li>
+						<?php
+						$menu = array(
+							array(
+								'controller' => 'index',
+								'name' => 'Customize your configuration',
+							),
+						);
+						
+						foreach ($menu as $item) {
+							$attrs = '';
+							if ($item['controller'] == $this->className) {
+								$attrs = 'class="active"';
+							}
+							echo "<li $attrs><a href=\"$item[controller]\">$item[name]</a></li>";
+						}
+						?>
+					</ul>
+					
+				</div>
+			</div>

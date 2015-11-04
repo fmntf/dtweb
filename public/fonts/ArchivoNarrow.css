@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Archivo Narrow';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Archivo Narrow Regular'), local('ArchivoNarrow-Regular'), url(/fonts/ArchivoNarrow.ttf) format('truetype'), url(/fonts/ArchivoNarrow.woff2) format('woff2');
+}
