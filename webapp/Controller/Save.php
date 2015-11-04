@@ -43,7 +43,10 @@ class Controller_Save extends Controller
         $dteditor->applyConfiguration($config);
 
         file_put_contents($dtsi, $dteditor->generate());
-        unlink("$kernelDir/arch/arm/boot/dts/$target");
+        
+        if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
+            unlink("$kernelDir/arch/arm/boot/dts/$target");
+        }
         if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
             $this->json(array('success' => false, 'message' => 'Cannot delete DTB.'));
         }

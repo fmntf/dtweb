@@ -120,8 +120,12 @@ function saveConfiguration()
             conf: JSON.stringify(devices)
         },
         method: 'POST',
-        success: function() {
-            console.log(arguments);
+        success: function(response) {
+            if (response.success) {
+                alert("Device tree built! Reboot your board to apply the changes.");
+            } else {
+                alert("Error: " + response.message||"unknown error.");
+            }
         },
         error: function() {
             console.warn(arguments);
