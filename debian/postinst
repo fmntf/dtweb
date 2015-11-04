@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        cd /opt/dtweb
+        tar xfj dtbkernel.tar.bz2
+        chown -R root:root dtbkernel
+        cd dtbkernel
+        chmod -R 666 arch/arm/boot/dts
+        (cd arch/arm/boot/dts/include; ln -s ../../../../../include/dt-bindings)
+        make imx6q-udoo.dtb
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,13 @@
+Source: dtweb
+Section: admin
+Priority: optional
+Maintainer: Francesco Montefoschi <francesco.monte@gmail.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://github.com/fmntf/dtweb
+
+Package: dtweb
+Architecture: any
+Depends: php5-cli, build-essential, gksu
+Description: Device Tree editor
+ Device Tree editor in a web browser
