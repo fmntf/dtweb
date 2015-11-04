@@ -128,7 +128,7 @@ function saveConfiguration()
             }
         },
         error: function() {
-            console.warn(arguments);
+            alert("Could not build DTB.");
         }
     });
 }
