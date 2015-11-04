@@ -48,7 +48,7 @@ class Controller_Save extends Controller
             $this->json(array('success' => false, 'message' => 'Cannot delete DTB.'));
         }
         
-        exec("make $target");
+        exec("cd $kernelDir; make $target");
         if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
             $this->json(array('success' => true));
         } else {
