@@ -115,20 +115,28 @@ function saveConfiguration()
         }
     }
     
+    $("body").mask("Please, wait...");
     $.ajax("/save", {
         data: {
             conf: JSON.stringify(devices)
         },
         method: 'POST',
         success: function(response) {
+            $("body").unmask();
+            
             if (response.success) {
-                alert("Device tree built! Reboot your board to apply the changes.");
+                $('#modal-msg').text("Device tree built!<br>Reboot your board to apply the changes.");
+                $('.modal').modal('show');
             } else {
-                alert("Error: " + response.message||"unknown error.");
+                $('#modal-msg').text("Error: " + (response.message||"unknown error."));
+                $('.modal').modal('show');
             }
         },
         error: function() {
-            alert("Could not build DTB.");
+            $("body").unmask();
+            
+            $('#modal-msg').text("Could not build DTB.");
+            $('.modal').modal('show');
         }
     });
 }
@@ -169,8 +177,7 @@ $(function() {
         },
         beforeOpen: function(event, ui) {
             ui.menu.zIndex( $(event.target).zIndex() + 1);
-            $(document)
-                .contextmenu("enableEntry", "remove", ui.target.hasClass("pin-busy"));
+            $(document).contextmenu("enableEntry", "remove", ui.target.hasClass("pin-busy"));
         }
     });
     
