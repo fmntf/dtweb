@@ -9,85 +9,114 @@
 
 #board {
     background-color: #308014;
-    width: 600px;
-    height: 550px;
+    width: 536px;
+    height: 590px;
     position: relative;
     margin: 0 auto;
 }
+
+#board:before {
+    width: 415px;
+    height: 265px;
+    content: "";
+    background-color: #383E38;
+    display: block;
+    left: 61px;
+    top: 0px;
+    position: absolute;
+    background: repeating-linear-gradient(to right, gray 0px, black 6px, #383E38 20px);
+}
+
+#board:after {
+    width: 160px;
+    height: 160px;
+    content: "ATSAM3X8E";
+    font-size: 21px;
+    line-height: 160px;
+    text-align: center;
+    transform: rotate(-90deg);
+    background-color: #383E38;
+    color: #666666;
+    display: block;
+    left: 85px;
+    top: 290px;
+    position: absolute;
+}
+
 .pin {
-    width: 30px;
-    height: 19px;
+    width: 27px;
+    height: 23px;
+    line-height: 23px;
     border: 1px solid gray;
     position: absolute;
     font-family: 'Archivo Narrow', sans-serif;
+    font-size: 13px;
+    text-overflow: clip;
     text-align: center;
     background-color: orange;
+    overflow: hidden;
 }
 .pin-busy {
     background-color: #ff8000;
-    font-size: 13px;
-    line-height: 19px;
-    text-overflow: clip;
-    overflow: hidden;
 }
 
+.pin-13 { top:20px; left: 490px; }
+.pin-12 { top:42px; left: 490px; }
+.pin-11 { top:64px; left: 490px; }
+.pin-10 { top:86px; left: 490px; }
+.pin-9 { top:108px; left: 490px; }
+.pin-8 { top:130px; left: 490px; }
+.pin-7 { top:152px; left: 490px; }
+.pin-6 { top:174px; left: 490px; }
+.pin-5 { top:196px; left: 490px; }
+.pin-4 { top:218px; left: 490px; }
+.pin-3 { top:240px; left: 490px; }
+.pin-2 { top:262px; left: 490px; }
+.pin-1 { top:284px; left: 490px; }
+.pin-0 { top:306px; left: 490px; }
 
-.pin-13 { top:20px; left: 550px; }
-.pin-12 { top:40px; left: 550px; }
-.pin-11 { top:60px; left: 550px; }
-.pin-10 { top:80px; left: 550px; }
-.pin-9 { top:100px; left: 550px; }
-.pin-8 { top:120px; left: 550px; }
-.pin-7 { top:140px; left: 550px; }
-.pin-6 { top:160px; left: 550px; }
-.pin-5 { top:180px; left: 550px; }
-.pin-4 { top:200px; left: 550px; }
-.pin-3 { top:220px; left: 550px; }
-.pin-2 { top:240px; left: 550px; }
-.pin-1 { top:260px; left: 550px; }
-.pin-0 { top:280px; left: 550px; }
+.pin-14 { top:340px; left: 490px; }
+.pin-15 { top:362px; left: 490px; }
+.pin-16 { top:384px; left: 490px; }
+.pin-17 { top:406px; left: 490px; }
+.pin-18 { top:428px; left: 490px; }
+.pin-19 { top:450px; left: 490px; }
+.pin-20 { top:472px; left: 490px; }
+.pin-21 { top:494px; left: 490px; }
 
-.pin-14 { top:310px; left: 550px; }
-.pin-15 { top:330px; left: 550px; }
-.pin-16 { top:350px; left: 550px; }
-.pin-17 { top:370px; left: 550px; }
-.pin-18 { top:390px; left: 550px; }
-.pin-19 { top:410px; left: 550px; }
-.pin-20 { top:430px; left: 550px; }
-.pin-21 { top:450px; left: 550px; }
+.pin-22 { top:525px;left: 450px; }
+.pin-23 { top:547px;left: 450px; }
+.pin-24 { top:525px;left: 424px; }
+.pin-25 { top:547px;left: 424px; }
+.pin-26 { top:525px;left: 398px; }
+.pin-27 { top:547px;left: 398px; }
+.pin-28 { top:525px;left: 372px; }
+.pin-29 { top:547px;left: 372px; }
+.pin-30 { top:525px;left: 346px; }
+.pin-31 { top:547px;left: 346px; }
+.pin-32 { top:525px;left: 320px; }
+.pin-33 { top:547px;left: 320px; }
+.pin-34 { top:525px;left: 294px; }
+.pin-35 { top:547px;left: 294px; }
+.pin-36 { top:525px;left: 268px; }
+.pin-37 { top:547px;left: 268px; }
+.pin-38 { top:525px;left: 242px; }
+.pin-39 { top:547px;left: 242px; }
 
-.pin-22 { top:490px; left: 510px; }
-.pin-23 { top:510px; left: 510px; }
-.pin-24 { top:490px; left: 480px; }
-.pin-25 { top:510px; left: 480px; }
-.pin-26 { top:490px; left: 450px; }
-.pin-27 { top:510px; left: 450px; }
-.pin-28 { top:490px; left: 420px; }
-.pin-29 { top:510px; left: 420px; }
-.pin-30 { top:490px; left: 390px; }
-.pin-31 { top:510px; left: 390px; }
-.pin-32 { top:490px; left: 360px; }
-.pin-33 { top:510px; left: 360px; }
-.pin-34 { top:490px; left: 330px; }
-.pin-35 { top:510px; left: 330px; }
-.pin-36 { top:490px; left: 300px; }
-.pin-37 { top:510px; left: 300px; }
-.pin-38 { top:490px; left: 270px; }
-.pin-39 { top:510px; left: 270px; }
-.pin-40 { top:490px; left: 240px; }
-.pin-41 { top:510px; left: 240px; }
-.pin-42 { top:490px; left: 210px; }
-.pin-43 { top:510px; left: 210px; }
-.pin-44 { top:490px; left: 180px; }
-.pin-45 { top:510px; left: 180px; }
-.pin-46 { top:490px; left: 150px; }
-.pin-47 { top:510px; left: 150px; }
-.pin-48 { top:490px; left: 120px; }
-.pin-49 { top:510px; left: 120px; }
-.pin-50 { top:490px; left: 90px; }
-.pin-51 { top:510px; left: 90px; }
-.pin-52 { top:490px; left: 60px; }
-.pin-53 { top:510px; left: 60px; }
+.pin-40 { top:525px;left: 216px; }
+.pin-41 { top:547px;left: 216px; }
+.pin-42 { top:525px;left: 190px; }
+.pin-43 { top:547px;left: 190px; }
+.pin-44 { top:525px;left: 164px; }
+.pin-45 { top:547px;left: 164px; }
+.pin-46 { top:525px;left: 138px; }
+.pin-47 { top:547px;left: 138px; }
+.pin-48 { top:525px;left: 112px; }
+.pin-49 { top:547px;left: 112px; }
+.pin-50 { top:525px;left: 86px; }
+.pin-51 { top:547px;left: 86px; }
+.pin-52 { top:525px;left: 60px; }
+.pin-53 { top:547px;left: 60px; }
 
-.pin-54 { top:430px; left: 20px; }
-.pin-55 { top:410px; left: 20px; }
+.pin-54 { top:494px; left: 20px; }
+.pin-55 { top:472px; left: 20px; }
