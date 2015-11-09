@@ -23,7 +23,7 @@
 
 class Model_Configuration
 {
-    public $features;
+    public $features = array();
     
     public function add($name, array $pins)
     {

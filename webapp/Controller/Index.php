@@ -31,7 +31,7 @@ class Controller_Index extends Controller
             $conf = file_get_contents("$configDir/config.json");
         }
         
-        $board = "qdl";
+        $board = $this->boardFromModel();
         if (!$board) {
             $this->render('boardunsupported', false);
             return;
@@ -42,5 +42,17 @@ class Controller_Index extends Controller
             'configuration' => $conf,
         );
         $this->render('index');
+    }
+    
+    private function boardFromModel()
+    {
+        if (file_exists("/proc/device-tree/model")) {
+            $model = file_get_contents("/proc/device-tree/model");
+            if ($model == "UDOO i.MX6 Quad Board") {
+                return "qdl";
+            }
+        }
+        
+        return null;
     }
 }
