@@ -27,6 +27,7 @@ class Controller_Save extends Controller
     {
         $conf = json_decode($_POST['conf'], true);
         $kernelDir = realpath(__DIR__ . '/../../dtbkernel');
+        $configDir = realpath(__DIR__ . '/../..');
         $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
         $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
         $target = "imx6q-udoo.dtb";
@@ -55,6 +56,7 @@ class Controller_Save extends Controller
         if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
             $copied = copy("$kernelDir/arch/arm/boot/dts/$target", "/boot/dts/$target");
             if ($copied) {
+                file_put_contents("$configDir/config.json", $_POST['conf']);
                 $this->json(array('success' => true));
             } else {
                 $this->json(array('success' => false, 'message' => 'Cannot copy DTB to /boot'));

@@ -24,10 +24,17 @@
 class Controller_Index extends Controller
 {
     public function run()
-	{
-		$this->viewVars = array(
-			'board' => 'qdl'
-		);
-		$this->render('index');
-	}
+    {
+        $configDir = realpath(__DIR__ . '/../..');
+        $conf = '';
+        if (file_exists("$configDir/config.json")) {
+            $conf = file_get_contents("$configDir/config.json");
+        }
+        
+        $this->viewVars = array(
+            'board' => 'qdl',
+            'configuration' => $conf,
+        );
+        $this->render('index');
+    }
 }

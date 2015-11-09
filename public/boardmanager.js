@@ -90,14 +90,7 @@ function initBoard(config, pinNumber) {
     }
 };
 
-function resetConfiguration()
-{
-    for (var i=0; i<=window.board.maxPin; i++) {
-        $(".pin-" + i).text(i).removeClass("pin-busy");
-    }
-}
-
-function saveConfiguration()
+function dumpConfiguration()
 {
     var devices = {}, pin, name;
     
@@ -115,11 +108,42 @@ function saveConfiguration()
             devices[name].push(pin.data("pin"));
         }
     }
-    
+
+    return devices;
+}
+
+function applyConfiguration(devices)
+{
+    for (var device in devices) {
+        if (devices.hasOwnProperty(device)) {
+            var configuration = devices[device], devname = device;
+            
+            if (device.substr(0, 7) == 'onewire') {
+                devname = '1wire';
+            }
+            
+            for (p=0; p<configuration.length; p++) {
+                $(".pin-" + configuration[p])
+                .text(devname)
+                .addClass("pin-busy");
+            }
+        }
+    }
+}
+
+function resetConfiguration()
+{
+    for (var i=0; i<=window.board.maxPin; i++) {
+        $(".pin-" + i).text(i).removeClass("pin-busy");
+    }
+}
+
+function saveConfiguration()
+{
     $("body").mask("Please, wait...");
     $.ajax("/save", {
         data: {
-            conf: JSON.stringify(devices)
+            conf: JSON.stringify(dumpConfiguration())
         },
         method: 'POST',
         success: function(response) {
