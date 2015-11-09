@@ -83,6 +83,7 @@ function initBoard(config, pinNumber) {
                 for (p=0; p<configuration.length; p++) {
                     $(".pin-" + configuration[p])
                     .text(ui.draggable.data("feature"))
+                    .attr("title", ui.draggable.data("feature"))
                     .addClass("pin-busy");
                 }
             }
@@ -134,7 +135,7 @@ function applyConfiguration(devices)
 function resetConfiguration()
 {
     for (var i=0; i<=window.board.maxPin; i++) {
-        $(".pin-" + i).text(i).removeClass("pin-busy");
+        $(".pin-" + i).text(i).attr("title", "").removeClass("pin-busy");
     }
 }
 
@@ -196,6 +197,7 @@ $(function() {
             for (p=0; p<configuration.length; p++) {
                 $(".pin-" + configuration[p])
                 .text(configuration[p])
+                .attr("title", "")
                 .removeClass("pin-busy");
             }
             
