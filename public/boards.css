@@ -1,0 +1,29 @@
+#features {
+    margin-bottom: 0px;
+}
+
+.dragobj {
+    z-index: 666;
+    opacity: 0.8;
+    width:25px;
+    height:21px;
+    background-color:orange;
+    border: 1px solid gray;
+}
+
+.pin {
+    width: 27px;
+    height: 23px;
+    line-height: 23px;
+    border: 1px solid gray;
+    position: absolute;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 13px;
+    text-overflow: clip;
+    text-align: center;
+    background-color: orange;
+    overflow: hidden;
+}
+.pin-busy {
+    background-color: #ff8000;
+}
