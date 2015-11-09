@@ -11,8 +11,9 @@ function initBoard(config, pinNumber) {
             child.draggable({
                 revert: "invalid",
                 helper: function(event) {
-                    return $("<ul class=\"list-group dragzindex\"></ul>").append($(event.target).clone().width($(event.target).width()));
-                }
+                    return $("<div class='dragobj'></div>");
+                },
+                cursorAt: { top: 3, left: 3 }
             });
         }
     }
