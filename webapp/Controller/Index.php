@@ -31,8 +31,14 @@ class Controller_Index extends Controller
             $conf = file_get_contents("$configDir/config.json");
         }
         
+        $board = "qdl";
+        if (!$board) {
+            $this->render('boardunsupported', false);
+            return;
+        }
+        
         $this->viewVars = array(
-            'board' => 'qdl',
+            'board' => $board,
             'configuration' => $conf,
         );
         $this->render('index');

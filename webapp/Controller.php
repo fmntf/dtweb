@@ -30,13 +30,13 @@ class Controller
 		$this->className = $thisClass;
 	}
 	
-	protected function render($script)
+	protected function render($script, $includeLayout = true)
 	{
 		extract($this->viewVars);
 		
-		include __DIR__ . "/View/_header.phtml";
+		if ($includeLayout) include __DIR__ . "/View/_header.phtml";
 		include __DIR__ . "/View/$script.phtml";
-		include __DIR__ . "/View/_footer.phtml";
+		if ($includeLayout) include __DIR__ . "/View/_footer.phtml";
 	}
 	
 	protected function json(array $response)
