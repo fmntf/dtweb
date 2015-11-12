@@ -91,6 +91,20 @@ function initBoard(config, pinNumber) {
     }
 };
 
+function getUsedPins()
+{
+    var pins = [], pin;
+    
+    for (var i=0; i<=window.board.maxPin; i++) {
+        pin = $(".pin-" + i);
+        if (pin.hasClass("pin-busy")) {
+            pins.push(pin.data("pin"));
+        }
+    }
+
+    return pins;
+}
+
 function dumpConfiguration()
 {
     var devices = {}, pin, name;
@@ -144,6 +158,7 @@ function saveConfiguration()
     $("body").mask("Please, wait...");
     $.ajax("/save", {
         data: {
+            id: window.board.id,
             conf: JSON.stringify(dumpConfiguration())
         },
         method: 'POST',
@@ -151,17 +166,27 @@ function saveConfiguration()
             $("body").unmask();
             
             if (response.success) {
-                $('#modal-msg').text("Device tree built!<br>Reboot your board to apply the changes.");
+                var html = [
+                    "Device tree built!",
+                    "<br>",
+                    "Reboot your board to apply the changes."
+                ];
+                if (window.board.id == 'qdl') {
+                    html.push("<br><br><span class=\"label label-warning\">WARNING!</span> ");
+                    html.push("Non-GPIO pins (" + getUsedPins().join(", ") + ") ");
+                    html.push("<b>must</b> be configured with <code>pinMode(pin, INPUT);</code> in the Arduino sketch!");
+                }
+                $('#modal-msg').html(html.join(''));
                 $('.modal').modal('show');
             } else {
-                $('#modal-msg').text("Error: " + (response.message||"unknown error."));
+                $('#modal-msg').html("Error: " + (response.message||"unknown error."));
                 $('.modal').modal('show');
             }
         },
         error: function() {
             $("body").unmask();
             
-            $('#modal-msg').text("Could not build DTB.");
+            $('#modal-msg').html("Could not build DTB.");
             $('.modal').modal('show');
         }
     });
@@ -208,7 +233,7 @@ $(function() {
         }
     });
     
-    $('#board-name').html(window.board.name);
+    $('.board-name').html(window.board.name);
     initBoard(window.board.features, window.board.maxPin);
     
     $('#reset-btn').on('click', resetConfiguration);

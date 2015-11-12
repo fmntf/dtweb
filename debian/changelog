@@ -1,3 +1,9 @@
+dtweb (1.1) trusty; urgency=medium
+
+  * Improved GUI, usability and added warning to prevent short circuits between iMX6 and SAM3X.
+
+ -- Francesco Montefoschi <francesco.monte@gmail.com>  Thu, 12 Nov 2015 14:12:56 +0100
+
 dtweb (1.0) trusty; urgency=low
 
   * Initial release

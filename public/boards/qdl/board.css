@@ -4,6 +4,7 @@
     height: 590px;
     position: relative;
     margin: 0 auto;
+    border: 1px solid #266610;
 }
 
 #board:before {
@@ -32,6 +33,7 @@
     left: 85px;
     top: 290px;
     position: absolute;
+    border: 1px solid gray;
 }
 
 .pin-13 { top:20px; left: 490px; }
