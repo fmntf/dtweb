@@ -1,0 +1,98 @@
+#board {
+    background-color: #308014;
+    width: 446px;
+    height: 520px;
+    position: relative;
+    margin: 0 auto;
+    border: 1px solid #266610;
+}
+
+#board:after {
+    width: 140px;
+    height: 140px;
+    content: "i.MX6";
+    font-size: 21px;
+    line-height: 140px;
+    text-align: center;
+    background-color: #383E38;
+    color: #555555;
+    display: block;
+    left: 210px;
+    top: 103px;
+    position: absolute;
+    border: 1px solid gray;
+}
+
+#board:before {
+    width: 100px;
+    height: 70px;
+    content: "5ME77";
+    font-size: 16px;
+    line-height: 70px;
+    text-align: center;
+    transform: rotate(-90deg);
+    background-color: #383E38;
+    color: #505050;
+    display: block;
+    left: 60px;
+    top: 135px;
+    position: absolute;
+    border: 1px solid gray;
+}
+
+.pin-33 { top:20px; left: 400px; }
+.pin-32 { top:42px; left: 400px; }
+.pin-31 { top:64px; left: 400px; }
+.pin-30 { top:86px; left: 400px; }
+.pin-29 { top:108px; left: 400px; }
+.pin-28 { top:130px; left: 400px; }
+.pin-27 { top:152px; left: 400px; }
+.pin-26 { top:174px; left: 400px; }
+.pin-25 { top:196px; left: 400px; }
+.pin-24 { top:218px; left: 400px; }
+
+.pin-23 { top:250px; left: 400px; }
+.pin-22 { top:272px; left: 400px; }
+.pin-21 { top:294px; left: 400px; }
+.pin-20 { top:316px; left: 400px; }
+.pin-19 { top:338px; left: 400px; }
+.pin-18 { top:360px; left: 400px; }
+.pin-17 { top:382px; left: 400px; }
+.pin-16 { top:404px; left: 400px; }
+
+.pin-47 { top:98px; left: 20px; }
+.pin-46 { top:120px; left: 20px; }
+.pin-45 { top:142px; left: 20px; }
+.pin-44 { top:164px; left: 20px; }
+.pin-43 { top:186px; left: 20px; }
+.pin-42 { top:208px; left: 20px; }
+.pin-41 { top:230px; left: 20px; }
+.pin-40 { top:252px; left: 20px; }
+
+.pin-39 { top:294px; left: 20px; }
+.pin-38 { top:316px; left: 20px; }
+.pin-37 { top:338px; left: 20px; }
+.pin-36 { top:360px; left: 20px; }
+.pin-35 { top:382px; left: 20px; }
+.pin-34 { top:404px; left: 20px; }
+
+/* i2c2 */
+.pin-48 {
+    color: transparent;
+    height: 55px;
+    top:440px;
+    left: 80px;
+}
+.pin-48:after {
+    width: 15px;
+    height: 45px;
+    content: ". . . . .";
+    font-size: 24px;
+    line-height: 8px;
+    text-align: center;
+    display: block;
+    left: 8px;
+    top: 0;
+    position: absolute;
+    color: gray;
+}

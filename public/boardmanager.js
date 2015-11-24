@@ -1,4 +1,4 @@
-function initBoard(config, pinNumber) {
+function initBoard(config) {
     var container, child, pinFeatures = [];
     
     container = $("#features");
@@ -7,6 +7,9 @@ function initBoard(config, pinNumber) {
             child = $("<li></li>");
             child.text(config[feature].description).addClass("function-"+feature+" list-group-item list-group-item-"+config[feature].cssClass);
             child.data("feature", feature);
+            if (config[feature].help) {
+                child.append('<span class="badge" title="'+config[feature].help+'">?</span>');
+            }
             child.appendTo(container);
             child.draggable({
                 revert: "invalid",
@@ -18,7 +21,7 @@ function initBoard(config, pinNumber) {
         }
     }
     
-    for (var i=0; i<=pinNumber; i++) {
+    for (var i=window.board.minPin; i<=window.board.maxPin; i++) {
         pinFeatures[i] = [];
     }
     for (var feature in config) {
@@ -33,7 +36,7 @@ function initBoard(config, pinNumber) {
     }
     
     container = $("#board");
-    for (var i=0; i<=pinNumber; i++) {
+    for (var i=window.board.minPin; i<=window.board.maxPin; i++) {
         child = $("<div></div>");
         child.text(i).addClass("pin pin-"+i);
         child.data("pin", i);
@@ -234,7 +237,7 @@ $(function() {
     });
     
     $('.board-name').html(window.board.name);
-    initBoard(window.board.features, window.board.maxPin);
+    initBoard(window.board.features);
     
     $('#reset-btn').on('click', resetConfiguration);
     $('#save-btn').on('click', saveConfiguration);

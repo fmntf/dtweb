@@ -37,7 +37,7 @@ h1 {
     opacity: 0.8;
     width:25px;
     height:21px;
-    background-color: #ff8000;
+    background-color: #ff6000;
     border: 1px solid gray;
 }
 
@@ -55,5 +55,5 @@ h1 {
     overflow: hidden;
 }
 .pin-busy {
-    background-color: #ff8000;
+    background-color: #ff6000;
 }

@@ -1,6 +1,7 @@
 window.board = {
     id: 'qdl',
     name: 'UDOO Quad/Dual',
+    minPin: 0,
     maxPin: 55
 };
 
