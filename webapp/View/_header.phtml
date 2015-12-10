@@ -9,14 +9,17 @@
 		<link rel="stylesheet" href="/jquery-ui/jquery-ui.css">
 		<link href="/fonts/ArchivoNarrow.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="/jquery.loadmask.css">
+		<link rel="stylesheet" href="/material/css/bootstrap-material-design.min.css">
+		<link rel="stylesheet" href="/material/css/ripples.min.css">
 		<script src="/jquery-1.11.3.min.js"></script>
 		<script src="/jquery-ui/jquery-ui.min.js"></script>
 		<script src="/jquery.ui-contextmenu.js"></script>
 		<script src="/boardmanager.js"></script>
 		<script src="/jquery.loadmask.js"></script>
 		<script src="/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/material/js/material.min.js"></script>
+		<script src="/material/js/ripples.min.js"></script>
 		
 		<link rel="stylesheet" href="/boards.css">
 		<script src="/boards/<?php echo $board; ?>/board.js"></script>
@@ -24,9 +27,33 @@
 	</head>
 	<body>
 		
+		<div class="bs-component">
+			<div class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+	  					<a class="navbar-brand">Device Tree Editor</a>
+	  				</div>
+					
+					<div class="navbar-collapse collapse navbar-responsive-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							
+							<li><a href="#" id="save-btn">
+								<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+								 Save
+							</a></li>
+							<li><a href="#" id="reset-btn">
+								<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+								 Reset configuration
+							</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	
+		
 		<div class="container-fluid">
-			<h1>Device Tree editor</h1>
-			
 			<p>By default, all the external pins on your <span class="board-name">UDOO</span> board
 				are configured to be used as GPIOs.</p>
 			<p>This tool allows you to edit this configuration, enabling additional peripherals, like serial ports, I2C buses and more.</p>

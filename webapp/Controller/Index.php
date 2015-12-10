@@ -32,6 +32,7 @@ class Controller_Index extends Controller
         }
         
         $board = $this->boardFromModel();
+        $board = 'neo';
         if (!$board) {
             $this->render('boardunsupported', false);
             return;
@@ -48,8 +49,11 @@ class Controller_Index extends Controller
     {
         if (file_exists("/proc/device-tree/model")) {
             $model = file_get_contents("/proc/device-tree/model");
-            if ($model == "UDOO i.MX6 Quad Board") {
+            if (strpos($model, 'UDOO i.MX6 Quad Board') !== false) {
                 return "qdl";
+            }
+            if (strpos($model, 'UDOO Neo') !== false) {
+                return "neo";
             }
         }
         

@@ -44,7 +44,6 @@ window.board.features = {
         ]
     },
     
-    /*
     "flexcan1": {
         description: 'CANBUS 1',
         cssClass: 'info',
@@ -59,11 +58,10 @@ window.board.features = {
             {pins: [42, 43]}
         ]
     },
-    */
     
     "i2c1": {
         description: 'I2C bus 1',
-        cssClass: 'info',
+        cssClass: 'success',
         configurations: [
             {pins: [26, 27]}
         ]
@@ -71,14 +69,14 @@ window.board.features = {
     "i2c2": {
         description: 'I2C bus 2 (bricks)',
         help: 'Drag this component on the snap-in connector to use the bricks sensors from Linux. Otherwise the I2C2 bus is assigned to the M4 core (Arduino).',
-        cssClass: 'info',
+        cssClass: 'success',
         configurations: [
             {pins: [48]}
         ]
     },
     "i2c4": {
         description: 'I2C bus 4 (9-axis)',
-        cssClass: 'info',
+        cssClass: 'success',
         help: 'Drag this component on pins 34-35 to use the 9-axis sensors from Linux. Otherwise the I2C4 bus is assigned to the M4 core (Arduino).',
         configurations: [
             {pins: [34, 35]}
@@ -87,7 +85,7 @@ window.board.features = {
     
     "1wire": {
         description: '1-Wire (on any pin)',
-        cssClass: 'danger',
+        cssClass: 'warning',
         configurations: [
             {pins: [16]},
             {pins: [17]},

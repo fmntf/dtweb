@@ -57,3 +57,25 @@ h1 {
 .pin-busy {
     background-color: #ff6000;
 }
+
+.navbar-brand {
+    font-size: 22px;
+}
+
+.navbar li:hover {
+    background-color: rgba(0,0,0,.1);
+    transition: background-color 200ms linear;
+}
+
+.navbar li a {
+    margin-top: -5px;
+}
+
+.navbar .glyphicon {
+    font-size: 23px;
+    position: relative;
+    top: 5px;
+}
+
+
+

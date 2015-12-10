@@ -25,16 +25,29 @@ class Controller_Save extends Controller
 {
     public function run()
     {
-        $conf = json_decode($_POST['conf'], true);
+        if ($_POST['id'] == 'qdl') {
+            $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
+            $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
+            
+            if (file_get_contents("/proc/device-tree/model") == "UDOO i.MX6 Quad Board") {
+                $target = "imx6q-udoo.dtb";
+            } else {
+                $target = "imx6dl-udoo.dtb";
+            }
+        }
+        
+        $this->build($dist, $dtsi, $target);
+	}
+    
+    private function build($dist, $dtsi, $target)
+    {
         $kernelDir = realpath(__DIR__ . '/../../dtbkernel');
         $configDir = realpath(__DIR__ . '/../..');
-        $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
-        $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
-        $target = "imx6q-udoo.dtb";
         
         $dtreader = new Service_DeviceTreeReader();
         $dt = $dtreader->parse($dist);
 
+        $conf = json_decode($_POST['conf'], true);
         $config = new Model_Configuration();
         foreach ($conf as $name => $pins) {
             $config->add($name, $pins);
@@ -54,7 +67,7 @@ class Controller_Save extends Controller
         
         exec("cd $kernelDir; make $target");
         if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
-            $copied = copy("$kernelDir/arch/arm/boot/dts/$target", "/boot/dts/$target");
+            $copied = copy("$kernelDir/arch/arm/boot/dts/$target", "/boot/dts/udoo.dtb");
             if ($copied) {
                 file_put_contents("$configDir/config.json", $_POST['conf']);
                 $this->json(array('success' => true));
@@ -64,5 +77,5 @@ class Controller_Save extends Controller
         } else {
             $this->json(array('success' => false, 'message' => 'DTB not built!'));
         }
-	}
+    }
 }
