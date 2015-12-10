@@ -25,6 +25,8 @@ class Controller_Save extends Controller
 {
     public function run()
     {
+        $kernelDir = realpath(__DIR__ . '/../../dtbkernel');
+        
         if ($_POST['id'] == 'qdl') {
             $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
             $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
@@ -34,6 +36,11 @@ class Controller_Save extends Controller
             } else {
                 $target = "imx6dl-udoo.dtb";
             }
+        } elseif ($_POST['id'] == 'neo') {
+            $dist = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins-dist.dtsi";
+            $dtsi = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins.dtsi";
+            
+            $target = "imx6sx-udoo-neo-basic-hdmi-m4.dtb";
         }
         
         $this->build($dist, $dtsi, $target);

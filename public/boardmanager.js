@@ -188,7 +188,6 @@ function saveConfiguration()
         },
         error: function() {
             $("body").unmask();
-            
             $('#modal-msg').html("Could not build DTB.");
             $('.modal').modal('show');
         }
