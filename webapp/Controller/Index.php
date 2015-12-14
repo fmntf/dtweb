@@ -25,17 +25,17 @@ class Controller_Index extends Controller
 {
     public function run()
     {
-        $configDir = realpath(__DIR__ . '/../..');
-        $conf = '';
-        if (file_exists("$configDir/config.json")) {
-            $conf = file_get_contents("$configDir/config.json");
-        }
-        
         $board = $this->boardFromModel();
-        $board = 'neo';
         if (!$board) {
             $this->render('boardunsupported', false);
             return;
+        }
+
+        $configDir = realpath(__DIR__ . '/../..');
+        if (file_exists("$configDir/config.json")) {
+            $conf = file_get_contents("$configDir/config.json");
+        } else {
+            $conf = file_get_contents("$configDir/public/boards/$board/defconfig.json");
         }
         
         $this->viewVars = array(

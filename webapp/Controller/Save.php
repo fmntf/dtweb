@@ -27,20 +27,21 @@ class Controller_Save extends Controller
     {
         $kernelDir = realpath(__DIR__ . '/../../dtbkernel');
         
-        if ($_POST['id'] == 'qdl') {
-            $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
-            $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
-            
-            if (file_get_contents("/proc/device-tree/model") == "UDOO i.MX6 Quad Board") {
-                $target = "imx6q-udoo.dtb";
-            } else {
-                $target = "imx6dl-udoo.dtb";
-            }
-        } elseif ($_POST['id'] == 'neo') {
-            $dist = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins-dist.dtsi";
-            $dtsi = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins.dtsi";
-            
-            $target = "imx6sx-udoo-neo-basic-hdmi-m4.dtb";
+        switch ($_POST['id']) {
+            case 'qdl':
+                $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
+                $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
+                $target = "imx6{q,dl}-udoo{lvds7,-lvds15,}.dtb";
+                break;
+                
+            case 'neo':
+                $dist = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins-dist.dtsi";
+                $dtsi = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins.dtsi";
+                $target = "imx6sx-udoo-neo-{basic,basicks,extended,full}{-hdmi,-lvds7,-lvds15,}{-m4,}.dtb";
+                break;
+                
+            default:
+                $this->json(array('success' => true, 'message' => "Invalid board model: " . $_POST['id']));
         }
         
         $this->build($dist, $dtsi, $target);
@@ -61,28 +62,41 @@ class Controller_Save extends Controller
         }
 
         $dteditor = new Service_DeviceTreeEditor($dt);
+        $dteditor->setBoardType($_POST['id']);
         $dteditor->applyConfiguration($config);
 
         file_put_contents($dtsi, $dteditor->generate());
         
-        if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
-            unlink("$kernelDir/arch/arm/boot/dts/$target");
-        }
-        if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
-            $this->json(array('success' => false, 'message' => 'Cannot delete DTB.'));
+        chdir("$kernelDir/arch/arm/boot/dts");
+        exec("bash -c 'rm $target'");
+        
+        chdir($kernelDir);
+        exec("bash -c 'make $target 2>&1'", $output, $returnCode);
+        
+        if ($returnCode != 0) {
+            $this->json(array(
+                'success' => false,
+                'message' => 'Cannot build DTB! Error log: <br><br><code>' . implode('<br>', $output) . '</code>'
+            ));
         }
         
-        exec("cd $kernelDir; make $target");
-        if (file_exists("$kernelDir/arch/arm/boot/dts/$target")) {
-            $copied = copy("$kernelDir/arch/arm/boot/dts/$target", "/boot/dts/udoo.dtb");
-            if ($copied) {
-                file_put_contents("$configDir/config.json", $_POST['conf']);
-                $this->json(array('success' => true));
-            } else {
-                $this->json(array('success' => false, 'message' => 'Cannot copy DTB to /boot'));
-            }
-        } else {
-            $this->json(array('success' => false, 'message' => 'DTB not built!'));
+        chdir("$kernelDir/arch/arm/boot/dts");
+        exec("mkdir /boot/dts-overlay");
+        exec("bash -c 'cp $target /boot/dts-overlay/'", $output, $returnCode);
+        
+        if ($returnCode != 0) {
+            $this->json(array(
+                'success' => false,
+                'message' => 'Cannot build DTB! Error log: <br><br><code>' . implode('<br>', $output) . '</code>'
+            ));
         }
+        
+        file_put_contents("$configDir/config.json", $_POST['conf']);
+        
+        $uenvEditor = new Service_UenvEditor("/boot/uEnv.txt");
+        $uenvEditor->setEnv("use_custom_dtb", "true");
+        $uenvEditor->toFile("/boot/uEnv.txt");
+        
+        $this->json(array('success' => true));
     }
 }

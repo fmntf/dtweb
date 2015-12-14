@@ -195,6 +195,8 @@ function saveConfiguration()
 }
 
 $(function() {
+    $.material.init();
+    
     $(document).contextmenu({
         delegate: ".pin",
         autoFocus: true,

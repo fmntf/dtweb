@@ -1,3 +1,9 @@
+dtweb (1.2) trusty; urgency=medium
+
+  * UDOO Neo support
+
+ -- Francesco Montefoschi <francesco.monte@gmail.com>  Fri, 11 Dec 2015 17:50:49 +0100
+
 dtweb (1.1) trusty; urgency=medium
 
   * Improved GUI, usability and added warning to prevent short circuits between iMX6 and SAM3X.

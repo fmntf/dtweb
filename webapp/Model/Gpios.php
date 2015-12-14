@@ -32,6 +32,10 @@ class Model_Gpios
     
     public function disable($pin)
     {
+        if ($pin == 48) {
+            throw new Exception();
+        }
+        
         $this->gpios[$pin]['disabled'] = true;
         
         $row = $this->gpios[$pin]['value'];

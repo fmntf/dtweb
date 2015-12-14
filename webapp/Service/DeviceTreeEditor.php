@@ -24,17 +24,25 @@
 class Service_DeviceTreeEditor
 {
     public $deviceTree;
+    private $boardType;
     
     public function __construct(Model_DeviceTree $deviceTree)
     {
         $this->deviceTree = $deviceTree;
     }
     
+    public function setBoardType($boardType) {
+        $this->boardType = $boardType;
+    }
+    
     public function applyConfiguration(Model_Configuration $config)
     {
         foreach ($config->features as $name => $pinConfig) {
             $this->deviceTree->enableFeature($name);
-            $this->deviceTree->disableGpios($pinConfig);
+            // UDOO Neo has I2C-2 on a fake #48 GPIO, so we do not disable it.
+            if (!($this->boardType === "neo" && $name === "i2c2")) {
+                $this->deviceTree->disableGpios($pinConfig);
+            }
         }
     }
     
