@@ -21,27 +21,20 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html  GNU GPL 3.0
  */
 
-class Controller_Index extends Controller
+class Service_BoardDetector
 {
-    public function run()
+    public static function boardFromModel()
     {
-        $board = Service_BoardDetector::boardFromModel();
-        if (!$board) {
-            $this->render('boardunsupported', false);
-            return;
-        }
-
-        $configDir = realpath(__DIR__ . '/../..');
-        if (file_exists("$configDir/config.json")) {
-            $conf = file_get_contents("$configDir/config.json");
-        } else {
-            $conf = file_get_contents("$configDir/public/boards/$board/defconfig.json");
+        if (file_exists("/proc/device-tree/model")) {
+            $model = file_get_contents("/proc/device-tree/model");
+            if (strpos($model, 'UDOO i.MX6 Quad Board') !== false) {
+                return "qdl";
+            }
+            if (strpos($model, 'UDOO Neo') !== false) {
+                return "neo";
+            }
         }
         
-        $this->viewVars = array(
-            'board' => $board,
-            'configuration' => $conf,
-        );
-        $this->render('index');
+        return null;
     }
 }

@@ -1,0 +1,64 @@
+#!/usr/bin/php5
+<?php
+/**
+ * dtweb - Device Tree editor for UDOO boards
+ * Copyright (C) 2015 Francesco Montefoschi <francesco.monte@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package dtweb
+ * @author  Francesco Montefoschi
+ * @license http://www.gnu.org/licenses/gpl-3.0.html  GNU GPL 3.0
+ */
+ 
+require "/opt/dtweb/webapp/autoloader.php";
+
+if (posix_geteuid() != 0) {
+    echo "This program must be run as root." . PHP_EOL;
+    exit(2);
+}
+
+$allowedScreens = array();
+$board = Service_BoardDetector::boardFromModel();
+switch ($board) {
+    case 'qdl':
+        $allowedScreens = array('hdmi', 'lvds7', 'lvds15');
+        break;
+    
+    case 'neo':
+        $allowedScreens = array('hdmi', 'lvds7', 'lvds15', 'headless');
+        break;
+}
+
+function show_usage() {
+    echo "Usage: setudooscreen <screentype>" . PHP_EOL . PHP_EOL;
+    echo "This board supports: " . implode(", ", $allowedScreens) . "." . PHP_EOL;
+    echo "Example: setudooscreen " . $allowedScreens[0] . PHP_EOL;
+    exit(1);
+}
+
+if ($_SERVER['argc'] != 2) {
+    show_usage();
+}
+
+
+if (!in_array($_SERVER['argv'][1], $allowedScreens)) {
+    show_usage();
+}
+
+$uenvEditor = new Service_UenvEditor("/boot/uEnv.txt");
+$uenvEditor->setEnv("video_output", $_SERVER['argv'][1]);
+$uenvEditor->toFile("/boot/uEnv.txt");
+
+exit(0);
