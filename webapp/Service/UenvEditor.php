@@ -95,7 +95,7 @@ class Service_UenvEditor
             $this->lines[$line] = "$k=" . $change['value'];
         }
         
-        $uenv = implode("\r\n", $this->lines);
+        $uenv = implode(PHP_EOL, $this->lines);
         file_put_contents($destinationFile, $uenv);
     }
 }
