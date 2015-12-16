@@ -4,7 +4,7 @@ set -e
 case "$1" in
     remove|upgrade|deconfigure)
         cd /usr/local/bin/dtweb
-        rm -rf dtbkernel
+        rm -rf dtbkernel || true
     ;;
 
     failed-upgrade)
