@@ -27,6 +27,17 @@ class Model_DeviceTree
     public $gpios;
     public $dtsi;
     
+    public function disableEverything()
+    {
+        foreach ($this->features as $feature) {
+            $feature->disabled = true;
+        }
+        
+        foreach ($this->gpios->gpios as $n => $gpio) {
+            $this->gpios->disable($n);
+        }
+    }
+    
     public function setFeatures(array $features)
     {
         $this->features = $features;

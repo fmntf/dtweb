@@ -4,12 +4,16 @@ set -e
 case "$1" in
     configure)
         cd /opt/dtweb
+        echo "Removing dtbkernel..."
+        rm -rf dtbkernel || true
+        echo "Unpacking dtbkernel..."
         tar xfj dtbkernel.tar.bz2
         chown -R root:root dtbkernel
         cd dtbkernel
         chmod -R 666 arch/arm/boot/dts
-        (cd arch/arm/boot/dts/include; ln -s ../../../../../include/dt-bindings)
-        make imx6q-udoo.dtb
+        (cd arch/arm/boot/dts/include; ln -s ../../../../../include/dt-bindings || true)
+        echo "Making a test DTB..."
+        make imx6q-udoo-hdmi.dtb
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

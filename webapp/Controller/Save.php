@@ -63,6 +63,7 @@ class Controller_Save extends Controller
 
         $dteditor = new Service_DeviceTreeEditor($dt);
         $dteditor->setBoardType($_POST['id']);
+        $dteditor->disableEverything();
         $dteditor->applyConfiguration($config);
 
         file_put_contents($dtsi, $dteditor->generate());

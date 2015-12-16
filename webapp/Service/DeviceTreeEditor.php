@@ -31,8 +31,13 @@ class Service_DeviceTreeEditor
         $this->deviceTree = $deviceTree;
     }
     
-    public function setBoardType($boardType) {
+    public function setBoardType($boardType)
+    {
         $this->boardType = $boardType;
+    }
+    
+    public function disableEverything() {
+        $this->deviceTree->disableEverything();
     }
     
     public function applyConfiguration(Model_Configuration $config)
