@@ -154,6 +154,8 @@ function resetConfiguration()
     for (var i=0; i<=window.board.maxPin; i++) {
         $(".pin-" + i).text(i).attr("title", "").removeClass("pin-busy");
     }
+    
+    applyConfiguration(JSON.parse(board.defconfig));
 }
 
 function saveConfiguration()

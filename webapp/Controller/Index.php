@@ -26,21 +26,24 @@ class Controller_Index extends Controller
     public function run()
     {
         $board = Service_BoardDetector::boardFromModel();
+        $board = "neo";
         if (!$board) {
             $this->render('boardunsupported', false);
             return;
         }
 
         $configDir = realpath(__DIR__ . '/../..');
+        $defconfig = file_get_contents("$configDir/public/boards/$board/defconfig.json");
         if (file_exists("$configDir/config.json")) {
-            $conf = file_get_contents("$configDir/config.json");
+            $config = file_get_contents("$configDir/config.json");
         } else {
-            $conf = file_get_contents("$configDir/public/boards/$board/defconfig.json");
+            $config = $defconfig;
         }
         
         $this->viewVars = array(
             'board' => $board,
-            'configuration' => $conf,
+            'configuration' => $config,
+            'defconfig' => $defconfig,
         );
         $this->render('index');
     }

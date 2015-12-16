@@ -61,6 +61,7 @@ window.board.features = {
     
     "i2c1": {
         description: 'I2C bus 1',
+        help: 'This bus is required to use the touch on the UDOO LVDS 7" screen.',
         cssClass: 'success',
         configurations: [
             {pins: [26, 27]}
