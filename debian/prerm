@@ -3,7 +3,7 @@ set -e
 
 case "$1" in
     remove|upgrade|deconfigure)
-        cd /usr/local/bin/dtweb
+        cd /opt/dtweb
         rm -rf dtbkernel || true
     ;;
 
