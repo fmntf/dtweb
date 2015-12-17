@@ -24,9 +24,13 @@
  
 require "/opt/dtweb/webapp/autoloader.php";
 
+define('ERROR_WRONG_USAGE', 1);
+define('ERROR_RUN_SUPERUSER', 2);
+define('ERROR_BOARD_UNSUPPORTED', 3);
+
 if (posix_geteuid() != 0) {
     echo "This program must be run as root." . PHP_EOL;
-    exit(2);
+    exit(ERROR_RUN_SUPERUSER);
 }
 
 $allowedScreens = array();
@@ -42,10 +46,11 @@ switch ($board) {
 }
 
 function show_usage() {
-    echo "Usage: setudooscreen <screentype>" . PHP_EOL . PHP_EOL;
+    echo "Use this tool to set the screen connected to the board." . PHP_EOL . PHP_EOL;
+    echo "Usage: udooscreenctl <screentype>" . PHP_EOL;
     echo "This board supports: " . implode(", ", $allowedScreens) . "." . PHP_EOL;
-    echo "Example: setudooscreen " . $allowedScreens[0] . PHP_EOL;
-    exit(1);
+    echo "Example: udooscreenctl " . $allowedScreens[0] . PHP_EOL;
+    exit(ERROR_WRONG_USAGE);
 }
 
 if ($_SERVER['argc'] != 2) {

@@ -31,7 +31,7 @@ class Controller_Save extends Controller
             case 'qdl':
                 $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
                 $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
-                $target = "imx6{q,dl}-udoo{lvds7,-lvds15,}.dtb";
+                $target = "imx6{q,dl}-udoo{-lvds7,-lvds15,-hdmi}.dtb";
                 break;
                 
             case 'neo':
