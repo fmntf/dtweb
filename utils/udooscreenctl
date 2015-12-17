@@ -46,24 +46,55 @@ switch ($board) {
 }
 
 function show_usage() {
-    echo "Use this tool to set the screen connected to the board." . PHP_EOL . PHP_EOL;
-    echo "Usage: udooscreenctl <screentype>" . PHP_EOL;
-    echo "This board supports: " . implode(", ", $allowedScreens) . "." . PHP_EOL;
-    echo "Example: udooscreenctl " . $allowedScreens[0] . PHP_EOL;
+    echo "Use this tool to get/set the screen connected to the board." . PHP_EOL . PHP_EOL;
+    echo "Usage: udooscreenctl set <screentype>" . PHP_EOL;
+    echo "Usage: udooscreenctl get" . PHP_EOL;
+    echo "The parameter <screentype> can be: " . implode(", ", $allowedScreens) . "." . PHP_EOL;
     exit(ERROR_WRONG_USAGE);
 }
 
-if ($_SERVER['argc'] != 2) {
-    show_usage();
+function get_screen() {
+    $uenvEditor = new Service_UenvEditor();
+    return $uenvEditor->getEnv("video_output", "hdmi");
 }
 
+function set_screen($screen) {
+    if (!in_array($screen, $allowedScreens)) {
+        show_usage();
+    }
+
+    $uenvEditor = new Service_UenvEditor();
+    $uenvEditor->setEnv("video_output", $screen);
+    $uenvEditor->toFile();
+}
+
+switch ($_SERVER['argc']) {
+    case 2:
+        if ($_SERVER['argv'][1] == "get") {
+            echo get_screen() . PHP_EOL;
+        } else {
+            show_usage();
+        }
+        break;
+        
+    case 3:
+        if ($_SERVER['argv'][1] == "set") {
+            set_screen($_SERVER['argv'][2]);
+        } else {
+            show_usage();
+        }
+        break;
+        
+    default:
+        show_usage();
+}
 
 if (!in_array($_SERVER['argv'][1], $allowedScreens)) {
     show_usage();
 }
 
-$uenvEditor = new Service_UenvEditor("/boot/uEnv.txt");
+$uenvEditor = new Service_UenvEditor();
 $uenvEditor->setEnv("video_output", $_SERVER['argv'][1]);
-$uenvEditor->toFile("/boot/uEnv.txt");
+$uenvEditor->toFile();
 
 exit(0);

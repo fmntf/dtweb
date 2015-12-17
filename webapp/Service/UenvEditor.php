@@ -27,7 +27,7 @@ class Service_UenvEditor
     private $items;
     private $changes;
     
-    public function __construct($uenvFilePath)
+    public function __construct($uenvFilePath = "/boot/uEnv.txt")
     {
         if (file_exists($uenvFilePath)) {
             $uenv = trim(file_get_contents($uenvFilePath));
@@ -59,13 +59,13 @@ class Service_UenvEditor
         }
     }
     
-    public function getEnv($varName)
+    public function getEnv($varName, $default = null)
     {
         if (array_key_exists($varName, $this->items)) {
             return $this->items[$varName]['value'];
         }
         
-        return null;
+        return $default;
     }
     
     public function setEnv($varName, $value)
@@ -82,7 +82,7 @@ class Service_UenvEditor
         $this->items[$varName]['value'] = $value;
     }
     
-    public function toFile($destinationFile)
+    public function toFile($destinationFile = "/boot/uEnv.txt")
     {
         foreach ($this->changes as $k) {
             $change = $this->items[$k];

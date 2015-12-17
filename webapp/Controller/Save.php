@@ -94,9 +94,9 @@ class Controller_Save extends Controller
         
         file_put_contents("$configDir/config.json", $_POST['conf']);
         
-        $uenvEditor = new Service_UenvEditor("/boot/uEnv.txt");
+        $uenvEditor = new Service_UenvEditor();
         $uenvEditor->setEnv("use_custom_dtb", "true");
-        $uenvEditor->toFile("/boot/uEnv.txt");
+        $uenvEditor->toFile();
         
         $this->json(array('success' => true));
     }

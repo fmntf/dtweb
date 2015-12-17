@@ -1,3 +1,9 @@
+dtweb (1.5) trusty; urgency=medium
+
+  * getters in udoo*ctl utils
+
+ -- Francesco Montefoschi <francesco.monte@gmail.com>  Thu, 17 Dec 2015 18:40:08 +0100
+
 dtweb (1.4) trusty; urgency=medium
 
   * Added udoom4ctl

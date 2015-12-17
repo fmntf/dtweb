@@ -33,7 +33,6 @@ if (posix_geteuid() != 0) {
     exit(ERROR_RUN_SUPERUSER);
 }
 
-$valid = array('enable', 'disable');
 $board = Service_BoardDetector::boardFromModel();
 if ($board == 'qdl') {
     echo "This board is unsupported." . PHP_EOL;
@@ -42,9 +41,9 @@ if ($board == 'qdl') {
 
 function show_usage() {
     echo "Use this tool to enable or disable the M4 core." . PHP_EOL . PHP_EOL;
-    echo "Usage: udoom4ctl <new status>" . PHP_EOL;
-    echo "Valid status are: " . implode(", ", $valid) . "." . PHP_EOL;
-    echo "Example: udoom4ctl " . $valid[0] . PHP_EOL;
+    echo "Usage: udoom4ctl disable" . PHP_EOL;
+    echo "       udoom4ctl enable" . PHP_EOL;
+    echo "       udoom4ctl status" . PHP_EOL;
     exit(ERROR_WRONG_USAGE);
 }
 
@@ -52,15 +51,26 @@ if ($_SERVER['argc'] != 2) {
     show_usage();
 }
 
+$uenvEditor = new Service_UenvEditor();
 
-if (!in_array($_SERVER['argv'][1], $valid)) {
-    show_usage();
+$argument = $_SERVER['argv'][1];
+switch ($argument) {
+    case 'disable':
+        $uenvEditor->setEnv("m4_enabled", "false");
+        $uenvEditor->toFile();
+        break;
+        
+    case 'enable':
+        $uenvEditor->setEnv("m4_enabled", "true");
+        $uenvEditor->toFile();
+        break;
+        
+    case 'disable':
+        echo $uenvEditor->getEnv("m4_enabled", "true") . PHP_EOL;
+        break;
+    
+    default:
+        show_usage();
 }
-
-$newValue = $_SERVER['argv'][1] == 'enable' ? 'true' : 'false';
-
-$uenvEditor = new Service_UenvEditor("/boot/uEnv.txt");
-$uenvEditor->setEnv("m4_enabled", $newValue);
-$uenvEditor->toFile("/boot/uEnv.txt");
 
 exit(0);
