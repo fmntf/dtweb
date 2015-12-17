@@ -30,7 +30,7 @@ class Service_UenvEditor
     public function __construct($uenvFilePath)
     {
         if (file_exists($uenvFilePath)) {
-            $uenv = file_get_contents($uenvFilePath);
+            $uenv = trim(file_get_contents($uenvFilePath));
             $this->lines = explode(PHP_EOL, $uenv);
         } else {
             $this->lines = array();
@@ -95,7 +95,7 @@ class Service_UenvEditor
             $this->lines[$line] = "$k=" . $change['value'];
         }
         
-        $uenv = implode(PHP_EOL, $this->lines);
+        $uenv = implode(PHP_EOL, $this->lines) . PHP_EOL;
         file_put_contents($destinationFile, $uenv);
     }
 }
