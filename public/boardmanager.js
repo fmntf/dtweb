@@ -124,6 +124,13 @@ function dumpConfiguration()
             }
             
             devices[name].push(pin.data("pin"));
+            
+            if (board.features[name] && board.features[name].depends && board.features[name].depends instanceof Array) {
+                for (var d=0; d<board.features[name].depends.length; d++) {
+                    var depend = board.features[name].depends[d];
+                    devices[depend] = [];
+                }
+            }
         }
     }
 

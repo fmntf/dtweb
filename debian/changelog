@@ -1,3 +1,9 @@
+dtweb (1.6) trusty; urgency=medium
+
+  * Enable SPDIF and I2S audio on UDOO Neo
+
+ -- Francesco Montefoschi <francesco.monte@gmail.com>  Wed, 23 Dec 2015 10:34:39 +0100
+
 dtweb (1.5) trusty; urgency=medium
 
   * getters in udoo*ctl utils

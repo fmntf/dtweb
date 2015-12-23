@@ -32,14 +32,29 @@ class Model_Gpios
     
     public function disable($pin)
     {
-        $this->gpios[$pin]['disabled'] = true;
-        
-        $row = $this->gpios[$pin]['value'];
-        if ( ($row[0] == " " || $row[0] == "\t") && ($row[1] == " " || $row[1] == "\t") ) {
-            $row[0] = "/";
-            $row[1] = "/";
+        if ($this->gpios[$pin]['disabled']) {
+            return ;
         }
         
+        $this->gpios[$pin]['disabled'] = true;
+        $row = $this->gpios[$pin]['value'];
+        $this->gpios[$pin]['value'] = "//" . $row;
+    }
+    
+    public function enable($pin)
+    {
+        if (!$this->gpios[$pin]['disabled']) {
+            return ;
+        }
+        
+        $this->gpios[$pin]['disabled'] = false;
+        $row = $this->gpios[$pin]['value'];
+        $parts = explode("MX6", $row);
+        if (count($parts) != 2) {
+            throw new UnexpectedValueException("Unexpected value: $row");
+        }
+        
+        $row = str_replace("//", "", $parts[0]) . 'MX6' . $parts[1];
         $this->gpios[$pin]['value'] = $row;
     }
 }

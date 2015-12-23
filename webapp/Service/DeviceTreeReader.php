@@ -31,6 +31,7 @@ class Service_DeviceTreeReader
         $gpios = [];
         $pwms = [];
         $features = [];
+        $requiredLines = [];
         
         foreach ($rows as $lineNumber => $row) {
             if (strpos($row, '{{external-gpio')) {
@@ -42,9 +43,19 @@ class Service_DeviceTreeReader
                 );
             }
             
+            if (strpos($row, '{{required-by-')) {
+                preg_match("/required\-by\-([A-Za-z0-9\-_]+).*/", $row, $matches);
+                if (!array_key_exists($matches[1], $requiredLines)) {
+                    $requiredLines[$matches[1]] = [];
+                }
+                $requiredLines[$matches[1]][] = $lineNumber;
+            }
+            
             if (strpos($row, 'status')) {
-                preg_match("/\s*status\s*=\s*\"(disabled|okay)\";/", $row, $matches);
-                $features[] = new Model_Feature($this->locateDevice($rows, $lineNumber, $matches[1]=='disabled'));
+                preg_match("/^(?:(?!\/\/).)*?\s*status\s*=\s*\"(disabled|okay)\";/", $row, $matches);
+                if ($matches) {
+                    $features[] = new Model_Feature($this->locateDevice($rows, $lineNumber, $matches[1]=='disabled'));
+                }
             }
         }
         
@@ -54,6 +65,7 @@ class Service_DeviceTreeReader
         $dt->setFeatures($features);
         $dt->setGpios($_gpios);
         $dt->setDtsi($rows);
+        $dt->setRequiredLines($requiredLines);
         
         return $dt;
     }
@@ -61,7 +73,7 @@ class Service_DeviceTreeReader
     private function locateDevice(array $rows, $aroundLine, $disabled)
     {
         for ($i=$aroundLine-1; $i>1; $i--) {
-            preg_match("/&?([A-Za-z0-9]+)(@(\d+))?\s*{/", $rows[$i], $matches);
+            preg_match("/^(?:(?!\/\/).)*?\s*&?([A-Za-z0-9\-_]+)(@(\d+))?\s*{/", $rows[$i], $matches);
             if (count($matches)>0) {
                 $alias = '';
                 if (count($matches)>3) {

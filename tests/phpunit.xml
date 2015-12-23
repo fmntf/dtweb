@@ -1,0 +1,6 @@
+<phpunit
+	backupGlobals="false" backupStaticAttributes="false"
+	bootstrap="../webapp/autoloader.php"
+	colors="true">
+</phpunit>
+

@@ -26,6 +26,7 @@ class Model_DeviceTree
     public $features;
     public $gpios;
     public $dtsi;
+    public $requiredLines;
     
     public function disableEverything()
     {
@@ -34,7 +35,7 @@ class Model_DeviceTree
         }
         
         foreach ($this->gpios->gpios as $n => $gpio) {
-            $this->gpios->disable($n);
+            $this->gpios->enable($n);
         }
     }
     
@@ -53,6 +54,11 @@ class Model_DeviceTree
         $this->dtsi = $dtsi;
     }
     
+    public function setRequiredLines(array $requiredLines)
+    {
+        $this->requiredLines = $requiredLines;
+    }
+    
     public function getFeature($name)
     {
         foreach ($this->features as $feature) {
@@ -66,6 +72,13 @@ class Model_DeviceTree
     {
         $feature = $this->getFeature($name);
         $feature->disabled = false;
+        
+        if (array_key_exists($name, $this->requiredLines)) {
+            foreach ($this->requiredLines[$name] as $lineToUncomment) {
+                $row = substr($this->dtsi[$lineToUncomment], 2);
+                $this->dtsi[$lineToUncomment] = $row;
+            }
+        }
     }
     
     public function disableGpios(array $pins)

@@ -59,6 +59,7 @@ window.board.features = {
         ]
     },
     
+    /*
     "i2c1": {
         description: 'I2C bus 1',
         help: 'This bus is required to use the touch on the UDOO LVDS 7" screen.',
@@ -67,6 +68,7 @@ window.board.features = {
             {pins: [26, 27]}
         ]
     },
+    */
     "i2c2": {
         description: 'I2C bus 2 (bricks)',
         help: 'Drag this component on the snap-in connector to use the bricks sensors from Linux. Otherwise the I2C2 bus is assigned to the M4 core (Arduino).',
@@ -81,6 +83,28 @@ window.board.features = {
         help: 'Drag this component on pins 34-35 to use the 9-axis sensors from Linux. Otherwise the I2C4 bus is assigned to the M4 core (Arduino).',
         configurations: [
             {pins: [34, 35]}
+        ]
+    },
+    
+    "sound_dac": {
+        description: 'I2S audio',
+        cssClass: 'info',
+        depends: [
+            'codec_dac',
+            'ssi1'
+        ],
+        configurations: [
+            {pins: [25, 26, 27]}
+        ]
+    },
+    "sound_spdif": {
+        description: 'SPDIF audio',
+        cssClass: 'info',
+        depends: [
+            'spdif',
+        ],
+        configurations: [
+            {pins: [30]}
         ]
     },
     
