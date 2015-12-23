@@ -90,7 +90,7 @@ window.board.features = {
         description: 'I2S audio',
         cssClass: 'info',
         depends: [
-            'codec_dac',
+            'dac-codec',
             'ssi1'
         ],
         configurations: [

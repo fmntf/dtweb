@@ -48,7 +48,7 @@ class Service_DeviceTreeReaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("pwm4", $features[13]->name);
         $this->assertEquals("pwm5", $features[14]->name);
         $this->assertEquals("pwm6", $features[15]->name);
-        $this->assertEquals("codec_dac", $features[16]->name);
+        $this->assertEquals("dac-codec", $features[16]->name);
         $this->assertEquals("sound_dac", $features[17]->name);
         $this->assertEquals("sound_spdif", $features[18]->name);
         $this->assertEquals("onewire16", $features[19]->name);

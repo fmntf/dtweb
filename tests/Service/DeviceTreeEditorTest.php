@@ -25,7 +25,7 @@ class Service_DeviceTreeEditorTest extends PHPUnit_Framework_TestCase
 {
     public function testAddsAudioDevices()
     {
-        $generated = $this->configureDeviceTree('{"sound_dac":[25,26,27],"codec_dac":[],"ssi1":[],"sound_spdif":[30],"spdif":[],"i2c4":[34,35],"uart1":[46,47],"i2c2":[48]}');
+        $generated = $this->configureDeviceTree('{"sound_dac":[25,26,27],"dac-codec":[],"ssi1":[],"sound_spdif":[30],"spdif":[],"i2c4":[34,35],"uart1":[46,47],"i2c2":[48]}');
         $expected = file_get_contents(__DIR__ . '/../fixtures/neo-audio.dtsi');
         
         $this->assertEquals($expected, $generated);
@@ -41,7 +41,7 @@ class Service_DeviceTreeEditorTest extends PHPUnit_Framework_TestCase
     
     public function testConfiguresAComplexExample()
     {
-        $generated = $this->configureDeviceTree('{"onewire16":[16],"onewire17":[17],"sound_dac":[25,26,27],"codec_dac":[],"ssi1":[],"uart6":[30,31,32,33],"onewire34":[34],"pwm2":[35],"flexcan1":[40,41],"uart2":[44,45],"uart1":[46,47],"i2c2":[48]}');
+        $generated = $this->configureDeviceTree('{"onewire16":[16],"onewire17":[17],"sound_dac":[25,26,27],"dac-codec":[],"ssi1":[],"uart6":[30,31,32,33],"onewire34":[34],"pwm2":[35],"flexcan1":[40,41],"uart2":[44,45],"uart1":[46,47],"i2c2":[48]}');
         $expected = file_get_contents(__DIR__ . '/../fixtures/neo-complex.dtsi');
         
         $this->assertEquals($expected, $generated);
