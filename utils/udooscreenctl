@@ -24,77 +24,82 @@
  
 require "/opt/dtweb/webapp/autoloader.php";
 
-define('ERROR_WRONG_USAGE', 1);
-define('ERROR_RUN_SUPERUSER', 2);
-define('ERROR_BOARD_UNSUPPORTED', 3);
-
-if (posix_geteuid() != 0) {
-    echo "This program must be run as root." . PHP_EOL;
-    exit(ERROR_RUN_SUPERUSER);
-}
-
-$allowedScreens = array();
-$board = Service_BoardDetector::boardFromModel();
-switch ($board) {
-    case 'qdl':
-        $allowedScreens = array('hdmi', 'lvds7', 'lvds15');
-        break;
+class UdooScreenCtl
+{
+    const ERROR_WRONG_USAGE = 1;
+    const ERROR_RUN_SUPERUSER = 2;
+    const ERROR_BOARD_UNSUPPORTED = 3;
     
-    case 'neo':
-        $allowedScreens = array('hdmi', 'lvds7', 'lvds15', 'headless');
-        break;
-}
+    private $allowedScreens = array();
+    
+    public function __construct()
+    {
+        if (posix_geteuid() != 0) {
+            echo "This program must be run as root." . PHP_EOL;
+            exit(self::ERROR_RUN_SUPERUSER);
+        }
 
-function show_usage() {
-    echo "Use this tool to get/set the screen connected to the board." . PHP_EOL . PHP_EOL;
-    echo "Usage: udooscreenctl set <screentype>" . PHP_EOL;
-    echo "Usage: udooscreenctl get" . PHP_EOL;
-    echo "The parameter <screentype> can be: " . implode(", ", $allowedScreens) . "." . PHP_EOL;
-    exit(ERROR_WRONG_USAGE);
-}
-
-function get_screen() {
-    $uenvEditor = new Service_UenvEditor();
-    return $uenvEditor->getEnv("video_output", "hdmi");
-}
-
-function set_screen($screen) {
-    if (!in_array($screen, $allowedScreens)) {
-        show_usage();
+        $board = Service_BoardDetector::boardFromModel();
+        switch ($board) {
+            case 'qdl':
+                $this->allowedScreens = array('hdmi', 'lvds7', 'lvds15');
+                break;
+            
+            case 'neo':
+                $this->allowedScreens = array('hdmi', 'lvds7', 'lvds15', 'headless');
+                break;
+        }
+    }
+    
+    public function show_usage() {
+        echo "Use this tool to get/set the screen connected to the board." . PHP_EOL . PHP_EOL;
+        echo "Usage: udooscreenctl set <screentype>" . PHP_EOL;
+        echo "Usage: udooscreenctl get" . PHP_EOL;
+        echo "The parameter <screentype> can be: " . implode(", ", $this->allowedScreens) . "." . PHP_EOL;
+        exit(self::ERROR_WRONG_USAGE);
     }
 
-    $uenvEditor = new Service_UenvEditor();
-    $uenvEditor->setEnv("video_output", $screen);
-    $uenvEditor->toFile();
-}
+    public function get_screen() {
+        $uenvEditor = new Service_UenvEditor();
+        return $uenvEditor->getEnv("video_output", "hdmi");
+    }
 
-switch ($_SERVER['argc']) {
-    case 2:
-        if ($_SERVER['argv'][1] == "get") {
-            echo get_screen() . PHP_EOL;
-        } else {
-            show_usage();
+    public function set_screen($screen) {
+        if (!in_array($screen, $this->allowedScreens)) {
+            $this->show_usage();
         }
-        break;
-        
-    case 3:
-        if ($_SERVER['argv'][1] == "set") {
-            set_screen($_SERVER['argv'][2]);
-        } else {
-            show_usage();
+
+        $uenvEditor = new Service_UenvEditor();
+        $uenvEditor->setEnv("video_output", $screen);
+        $uenvEditor->toFile();
+    }
+    
+    public function __invoke()
+    {
+        switch ($_SERVER['argc']) {
+            case 2:
+                if ($_SERVER['argv'][1] == "get") {
+                    echo $this->get_screen() . PHP_EOL;
+                    exit(0);
+                } else {
+                    $this->show_usage();
+                }
+                break;
+                
+            case 3:
+                if ($_SERVER['argv'][1] == "set" && in_array($_SERVER['argv'][2], $this->allowedScreens)) {
+                    $this->set_screen($_SERVER['argv'][2]);
+                    exit(0);
+                } else {
+                    $this->show_usage();
+                }
+                break;
+                
+            default:
+                $this->show_usage();
         }
-        break;
-        
-    default:
-        show_usage();
+    }
 }
 
-if (!in_array($_SERVER['argv'][1], $allowedScreens)) {
-    show_usage();
-}
-
-$uenvEditor = new Service_UenvEditor();
-$uenvEditor->setEnv("video_output", $_SERVER['argv'][1]);
-$uenvEditor->toFile();
-
-exit(0);
+$command = new UdooScreenCtl();
+$command();

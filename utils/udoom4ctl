@@ -24,53 +24,65 @@
  
 require "/opt/dtweb/webapp/autoloader.php";
 
-define('ERROR_WRONG_USAGE', 1);
-define('ERROR_RUN_SUPERUSER', 2);
-define('ERROR_BOARD_UNSUPPORTED', 3);
-
-if (posix_geteuid() != 0) {
-    echo "This program must be run as root." . PHP_EOL;
-    exit(ERROR_RUN_SUPERUSER);
-}
-
-$board = Service_BoardDetector::boardFromModel();
-if ($board == 'qdl') {
-    echo "This board is unsupported." . PHP_EOL;
-    exit(ERROR_BOARD_UNSUPPORTED);
-}
-
-function show_usage() {
-    echo "Use this tool to enable or disable the M4 core." . PHP_EOL . PHP_EOL;
-    echo "Usage: udoom4ctl disable" . PHP_EOL;
-    echo "       udoom4ctl enable" . PHP_EOL;
-    echo "       udoom4ctl status" . PHP_EOL;
-    exit(ERROR_WRONG_USAGE);
-}
-
-if ($_SERVER['argc'] != 2) {
-    show_usage();
-}
-
-$uenvEditor = new Service_UenvEditor();
-
-$argument = $_SERVER['argv'][1];
-switch ($argument) {
-    case 'disable':
-        $uenvEditor->setEnv("m4_enabled", "false");
-        $uenvEditor->toFile();
-        break;
-        
-    case 'enable':
-        $uenvEditor->setEnv("m4_enabled", "true");
-        $uenvEditor->toFile();
-        break;
-        
-    case 'disable':
-        echo $uenvEditor->getEnv("m4_enabled", "true") . PHP_EOL;
-        break;
+class UdooM4Ctl
+{
+    const ERROR_WRONG_USAGE = 1;
+    const ERROR_RUN_SUPERUSER = 2;
+    const ERROR_BOARD_UNSUPPORTED = 3;
     
-    default:
-        show_usage();
+    public function __construct()
+    {
+        if (posix_geteuid() != 0) {
+            echo "This program must be run as root." . PHP_EOL;
+            exit(self::ERROR_RUN_SUPERUSER);
+        }
+
+        $board = Service_BoardDetector::boardFromModel();
+        if ($board == 'qdl') {
+            echo "This board is unsupported." . PHP_EOL;
+            exit(self::ERROR_BOARD_UNSUPPORTED);
+        }
+    }
+    
+    public function show_usage() {
+        echo "Use this tool to enable or disable the M4 core." . PHP_EOL . PHP_EOL;
+        echo "Usage: udoom4ctl disable" . PHP_EOL;
+        echo "       udoom4ctl enable" . PHP_EOL;
+        echo "       udoom4ctl status" . PHP_EOL;
+        exit(self::ERROR_WRONG_USAGE);
+    }
+    
+    public function __invoke()
+    {
+        if ($_SERVER['argc'] != 2) {
+            $this->show_usage();
+        }
+
+        $uenvEditor = new Service_UenvEditor();
+
+        $argument = $_SERVER['argv'][1];
+        switch ($argument) {
+            case 'disable':
+                $uenvEditor->setEnv("m4_enabled", "false");
+                $uenvEditor->toFile();
+                break;
+                
+            case 'enable':
+                $uenvEditor->setEnv("m4_enabled", "true");
+                $uenvEditor->toFile();
+                break;
+                
+            case 'status':
+                echo $uenvEditor->getEnv("m4_enabled", "true") . PHP_EOL;
+                break;
+            
+            default:
+                $this->show_usage();
+        }
+
+        exit(0);
+    }
 }
 
-exit(0);
+$command = new UdooM4Ctl();
+$command();
