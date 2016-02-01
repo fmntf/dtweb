@@ -27,7 +27,10 @@ class Service_BoardDetector
     {
         if (file_exists("/proc/device-tree/model")) {
             $model = file_get_contents("/proc/device-tree/model");
-            if (strpos($model, 'UDOO i.MX6 Quad Board') !== false) {
+            if (strpos($model, 'UDOO Quad') !== false) {
+                return "qdl";
+            }
+            if (strpos($model, 'UDOO Dual') !== false) {
                 return "qdl";
             }
             if (strpos($model, 'UDOO Neo') !== false) {

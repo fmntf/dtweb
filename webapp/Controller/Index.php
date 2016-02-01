@@ -26,7 +26,6 @@ class Controller_Index extends Controller
     public function run()
     {
         $board = Service_BoardDetector::boardFromModel();
-        $board = "neo";
         if (!$board) {
             $this->render('boardunsupported', false);
             return;
