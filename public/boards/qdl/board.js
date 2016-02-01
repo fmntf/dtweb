@@ -123,12 +123,28 @@ window.board.features = {
             {pins: [52]},
             {pins: [53]}
         ]
-    }
+    },
     
+    "sound_spdif": {
+        description: 'SPDIF audio',
+        cssClass: 'info',
+        depends: [
+            'spdif',
+        ],
+        configurations: [
+            {pins: [21, 44]}
+        ]
+    },
+    
+    "flexcan1": {
+        description: 'CANBUS 1',
+        cssClass: 'warning',
+        configurations: [
+            {pins: [54, 55]}
+        ]
+    }
+        
 /*
-    "SPDIF": [
-      {pins: [21, 44]}
-    ],
     "SPI1": [
       {pins: [36, 37, 45, 46, 53]}
     ],
@@ -140,9 +156,6 @@ window.board.features = {
     ],
     "DIGITALAUDIO": [
       {pins: [29, 30, 32, 33, 34, 35]}
-    ],
-    "CAN": [
-      {pins: [54, 55]}
     ],
 */
 };
