@@ -38,6 +38,6 @@ class Service_BoardDetector
             }
         }
         
-        return null;
+        return "qdl";
     }
 }
