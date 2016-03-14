@@ -1,3 +1,9 @@
+dtweb (1.10) trusty; urgency=medium
+
+  * Updated device trees to f9d152e66cb598c88860e9713a910f199b6d4d99
+
+ -- Francesco Montefoschi <francesco.monte@gmail.com>  Tue, 14 Mar 2016 14:02:06 +0100
+
 dtweb (1.9) trusty; urgency=medium
 
   * Release at af66494a7f39b71f9d80871fce5f49b09cbcc71c
