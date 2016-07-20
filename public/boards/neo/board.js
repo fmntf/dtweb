@@ -108,6 +108,14 @@ window.board.features = {
         ]
     },
     
+    "ecspi2": {
+        description: 'SPI2',
+        cssClass: 'success',
+        configurations: [
+            {pins: [20, 21, 38, 39]}
+        ]
+    },
+    
     "1wire": {
         description: '1-Wire (on any pin)',
         cssClass: 'warning',
