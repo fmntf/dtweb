@@ -1,3 +1,9 @@
+dtweb (1.11) trusty; urgency=medium
+
+  * Added ecspi2
+
+ -- Francesco Montefoschi <francesco.monte@gmail.com>  Wed, 20 Jul 2016 16:05:28 +0100
+
 dtweb (1.10) trusty; urgency=medium
 
   * Updated device trees to f9d152e66cb598c88860e9713a910f199b6d4d99
