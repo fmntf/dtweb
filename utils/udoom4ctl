@@ -1,4 +1,4 @@
-#!/usr/bin/php5
+#!/usr/bin/php
 <?php
 /**
  * dtweb - Device Tree editor for UDOO boards
