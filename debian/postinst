@@ -28,7 +28,7 @@ case "$1" in
         fi
 
         echo "Making a test DTB..."
-        make imx6q-udoo-hdmi.dtb
+        make -j4 imx6q-udoo-hdmi.dtb
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

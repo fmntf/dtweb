@@ -72,7 +72,7 @@ class Controller_Save extends Controller
         exec("bash -c 'rm $target'");
         
         chdir($kernelDir);
-        exec("bash -c 'make $target 2>&1'", $output, $returnCode);
+        exec("bash -c 'make -j2 $target 2>&1'", $output, $returnCode);
         
         if ($returnCode != 0) {
             $this->json(array(
