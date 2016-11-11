@@ -142,15 +142,25 @@ window.board.features = {
         configurations: [
             {pins: [54, 55]}
         ]
+    },
+    
+    "ecspi1": {
+        description: 'SPI1',
+        cssClass: 'success',
+        configurations: [
+            {pins: [36, 37, 45, 46, 53]}
+        ]
+    },
+    
+    "ecspi2": {
+        description: 'SPI2',
+        cssClass: 'success',
+        configurations: [
+            {pins: [31, 50, 51, 52, 53]}
+        ]
     }
-        
+    
 /*
-    "SPI1": [
-      {pins: [36, 37, 45, 46, 53]}
-    ],
-    "SPI2": [
-      {pins: [31, 50, 51, 52, 53]}
-    ],
     "SPI5": [
       {pins: [4, 5, 8, 9]}
     ],
