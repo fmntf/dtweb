@@ -1,3 +1,11 @@
+dtweb (1.13) xenial; urgency=medium
+
+  * Enabled SPI1/2 for UDOO Quad/Dual
+  * Multicore build proper support
+  * Added dtweb-headless
+
+ -- Francesco Montefoschi <francesco.montefoschi@udoo.org>  Fri, 11 Nov 2016 11:33:29 +0100
+
 dtweb (1.12) xenial; urgency=medium
 
   * Kernel 4 support
