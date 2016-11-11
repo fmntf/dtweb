@@ -32,22 +32,24 @@ class Controller_Save extends Controller
                 $dist = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins-dist.dtsi";
                 $dtsi = "$kernelDir/arch/arm/boot/dts/imx6qdl-udoo-externalpins.dtsi";
                 $target = "imx6{q,dl}-udoo{-lvds7,-lvds15,-hdmi}.dtb";
+                $cores = 4;
                 break;
                 
             case 'neo':
                 $dist = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins-dist.dtsi";
                 $dtsi = "$kernelDir/arch/arm/boot/dts/imx6sx-udoo-neo-externalpins.dtsi";
                 $target = "imx6sx-udoo-neo-{basic,basicks,extended,full}{-hdmi,-lvds7,-lvds15,}{-m4,}.dtb";
+                $cores = 1;
                 break;
                 
             default:
                 $this->json(array('success' => true, 'message' => "Invalid board model: " . $_POST['id']));
         }
         
-        $this->build($dist, $dtsi, $target);
+        $this->build($dist, $dtsi, $target, $cores);
 	}
     
-    private function build($dist, $dtsi, $target)
+    private function build($dist, $dtsi, $target, $cores)
     {
         $kernelDir = realpath(__DIR__ . '/../../dtbkernel');
         $configDir = realpath(__DIR__ . '/../..');
@@ -72,7 +74,7 @@ class Controller_Save extends Controller
         exec("bash -c 'rm $target'");
         
         chdir($kernelDir);
-        exec("bash -c 'make -j2 $target 2>&1'", $output, $returnCode);
+        exec("bash -c 'make -j$cores $target 2>&1'", $output, $returnCode);
         
         if ($returnCode != 0) {
             $this->json(array(
