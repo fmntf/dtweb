@@ -148,7 +148,7 @@ window.board.features = {
         description: 'SPI1',
         cssClass: 'success',
         configurations: [
-            {pins: [36, 37, 45, 46, 53]}
+            {pins: [36, 37, 45, 46]}
         ]
     },
     
@@ -156,7 +156,7 @@ window.board.features = {
         description: 'SPI2',
         cssClass: 'success',
         configurations: [
-            {pins: [31, 50, 51, 52, 53]}
+            {pins: [34, 50, 51, 52]}
         ]
     }
     
