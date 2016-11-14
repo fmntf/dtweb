@@ -24,6 +24,7 @@ case "$1" in
             chown -R root:root dtbkernel
             cd dtbkernel
             chmod -R 666 arch/arm/boot/dts
+            mkdir -p arch/arm/boot/dts/include || true
             (cd arch/arm/boot/dts/include; ln -s ../../../../../include/dt-bindings || true)
         fi
 
