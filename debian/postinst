@@ -10,7 +10,7 @@ case "$1" in
         KERNEL_MAJOR=`uname -r | head -c1`
         echo $KERNEL_MAJOR
 
-        if [ "$KERNEL_MAJOR" == "4" ]; then
+        if [ "$KERNEL_MAJOR" = "4" ]; then
             echo "Linux 4 detected!"
             echo "Unpacking dtbkernel..."
             tar xfj dtbkernel4.tar.bz2
