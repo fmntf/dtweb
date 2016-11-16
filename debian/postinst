@@ -7,8 +7,12 @@ case "$1" in
         echo "Removing dtbkernel..."
         rm -rf dtbkernel || true
 
-        KERNEL_MAJOR=`uname -r | head -c1`
-        echo $KERNEL_MAJOR
+        ls /lib/modules/3.14*
+        if [ $? -eq 0 ]; then
+            KERNEL_MAJOR=3
+        else
+            KERNEL_MAJOR=4
+        fi
 
         if [ "$KERNEL_MAJOR" = "4" ]; then
             echo "Linux 4 detected!"
