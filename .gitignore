@@ -1,2 +1,6 @@
 dtbkernel/
-
+debian/.debhelper/
+debian/dtweb.debhelper.log
+debian/dtweb.substvars
+debian/dtweb/
+debian/files

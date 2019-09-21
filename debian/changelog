@@ -1,3 +1,9 @@
+dtweb (1.14.1) bionic; urgency=medium
+
+  * dtbkernel4 at 23c6c7b4d23a8eae1740bac0d509bedd72273607
+
+ -- Francesco Montefoschi <francesco.montefoschi@udoo.org>  Sat, 21 Sep 2019 16:01:10 +0200
+
 dtweb (1.14) bionic; urgency=medium
 
   * UDOO Neo on Bionic support
