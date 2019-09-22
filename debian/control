@@ -8,6 +8,6 @@ Homepage: https://github.com/fmntf/dtweb
 
 Package: dtweb
 Architecture: any
-Depends: php-cli | php5-cli, build-essential, gksu
+Depends: php-cli, build-essential
 Description: Device Tree editor
  Device Tree editor in a web browser

@@ -1,3 +1,9 @@
+dtweb (1.15) bionic; urgency=medium
+
+  * Removed gksu/chromium integration. It is now possible to start dtweb from udoo-web-conf.
+
+ -- Francesco Montefoschi <francesco.montefoschi@udoo.org>  Sun, 22 Sep 2019 01:19:12 +0000
+
 dtweb (1.14.1) bionic; urgency=medium
 
   * dtbkernel4 at 23c6c7b4d23a8eae1740bac0d509bedd72273607
